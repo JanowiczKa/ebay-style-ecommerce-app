@@ -1,45 +1,39 @@
-import data from './data';
+import React from 'react'
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import HomePage from './pages/HomePage';
+import ProductPage from './pages/ProductPage';
 
 function App() {
   return (
-    <div className="grid-container">
-            <header className="row">
-                <div>
-                    <a className="brand" href="index.html">Kamazon</a>
-                </div>
-                <div>
-                    <a href="cart.html">Cart</a>
-                    <a href="signin.html">Sign In</a>
+    <BrowserRouter>
+        <div className="grid-container">
+            <header>
+                <div className="row top">
+                    <div>
+                        <a className="brand" href="index.html">Kamazon</a>
+                    </div>
+                    <div>
+                        Search Bar
+                    </div>
+                    <div className="menu">
+                            <a className="cart" href="cart.html">
+                                Cart
+                            </a>
+                            <a className="sign-in" href="signin.html">
+                                Sign In
+                            </a>   
+                    </div>
                 </div>
             </header>
             <main>
-                <div className = "row centre">
-
-                  {
-                    data.products.map(product => (
-                      <div key={product._id} className = "product">
-
-                        <a href={`/product/${product._id}`}>
-                            <img className="medium" src={product.image} alt={product.name} />
-                            <div className="product-body">
-                                <h2>{product.name}</h2>
-                            </div>
-                        </a>
-                        <div className="price">
-                            <h2>£{product.price}</h2>
-                        </div>
-                        <div className="seller">
-                            <a href="profie.html">
-                                <h3>sold by {product.seller}</h3>  
-                            </a>
-                        </div>
-                    </div>
-                    ))
-                  }
-                </div>
+                <Routes>
+                    <Route path="/product/:id" element={<ProductPage/>}></Route>
+                    <Route path="/" element={<HomePage/>} exact></Route>
+                </Routes>
             </main>
             <footer className="row centre">All rights reserved</footer>
         </div>
+    </BrowserRouter>
   );
 }
 

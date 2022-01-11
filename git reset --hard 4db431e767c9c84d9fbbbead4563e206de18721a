@@ -1,0 +1,46 @@
+[33mcommit a9fd83838dd2ae4ed325ef5f4a4d4cfd59e3676c[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: Kamil Janowicz <janowiczka123@gmail.com>
+Date:   Fri Jan 7 21:47:21 2022 +0000
+
+    share code on github
+
+:100644 000000 7ad3bff 0000000 D	frontend/.gitignore
+
+[33mcommit 4db431e767c9c84d9fbbbead4563e206de18721a[m
+Author: Kamil Janowicz <janowiczka123@gmail.com>
+Date:   Fri Jan 7 21:31:09 2022 +0000
+
+    share code on github
+
+:000000 100644 0000000 7ad3bff A	frontend/.gitignore
+
+[33mcommit 7b2d1c2579c6bfa5527915dcdd7f749736964093[m
+Author: Kamil Janowicz <janowiczka123@gmail.com>
+Date:   Fri Jan 7 21:15:25 2022 +0000
+
+    share code on github
+
+:000000 100644 0000000 7ad3bff A	.gitignore
+:000000 100644 0000000 58beeac A	frontend/README.md
+:000000 100644 0000000 fc94ad3 A	frontend/package-lock.json
+:000000 100644 0000000 3063265 A	frontend/package.json
+:000000 100644 0000000 a11777c A	frontend/public/favicon.ico
+:000000 100644 0000000 542349c A	frontend/public/images/product-1.jpg
+:000000 100644 0000000 ac49552 A	frontend/public/images/product-2.jpg
+:000000 100644 0000000 ca961bc A	frontend/public/images/product-3.jpg
+:000000 100644 0000000 39a82f4 A	frontend/public/images/product-4.jpg
+:000000 100644 0000000 1c843fb A	frontend/public/images/product-5.jpg
+:000000 100644 0000000 9c98903 A	frontend/public/images/product-6.jpg
+:000000 100644 0000000 aa069f2 A	frontend/public/index.html
+:000000 100644 0000000 fc44b0a A	frontend/public/logo192.png
+:000000 100644 0000000 a4e47a6 A	frontend/public/logo512.png
+:000000 100644 0000000 080d6c7 A	frontend/public/manifest.json
+:000000 100644 0000000 e9e57dc A	frontend/public/robots.txt
+:000000 100644 0000000 5542367 A	frontend/src/App.js
+:000000 100644 0000000 45dd239 A	frontend/src/data.js
+:000000 100644 0000000 fc01873 A	frontend/src/index.css
+:000000 100644 0000000 ef2edf8 A	frontend/src/index.js
+:000000 100644 0000000 5253d3a A	frontend/src/reportWebVitals.js
+:000000 100644 0000000 542349c A	template/images/product-1.jpg
+:000000 100644 0000000 52f2d25 A	template/index.html
+:000000 100644 0000000 114393a A	template/style.css
