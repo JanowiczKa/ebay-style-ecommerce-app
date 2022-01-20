@@ -1,6 +1,6 @@
 @font-face{
-  src: url(fonts/Merriweather-Regular.ttf);
-  font-family: Merriweather;
+  font-family: 'Merriweather';
+  src: local('Merriweather'), url(./fonts/Merriweather-Regular.ttf) format('truetype');
 }
 
 html{
@@ -52,6 +52,7 @@ footer{
 h1{
   font-size: 1.8rem;
   padding: 0rem 0;
+  margin: 0.5rem;
 }
 h2{
   color: #000000;
@@ -111,7 +112,15 @@ a.sign-in:hover{
   justify-content: center;
 }
 
-/*main*/
+.product-page{
+  margin: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100rem;
+  vertical-align: 0rem;
+}
+
+/*images*/
 img{
   border-radius: 0.5rem;
 }
@@ -125,8 +134,28 @@ img.medium{
 img.icon{
   width: 1.2rem;
   height: 1.2rem; 
-  padding: 0rem 0;
+  padding: 0.1rem;
 }
+
+img.big{
+  max-width: 80rem;
+  max-height: 60rem;
+  height: 100%;
+  width: 100%;
+  object-fit: contain;  
+}
+
+img.clickable {
+  height: 7rem;
+  width: 7rem;
+  margin: 0.62rem;
+  object-fit: cover;
+  display: inline-block;
+  border-radius: 0.7rem;
+  border: 0.2rem #d3d3d3 solid;    
+}
+
+/*main*/
 
 .product{
   border: 0.2rem #ffffff solid;    
@@ -163,4 +192,27 @@ img.icon{
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+}
+
+.scroller {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.product-image{
+  width: 80rem;
+  height: 60rem;
+  border-radius: 0.7rem;
+  border: 0.2rem #d3d3d3 solid;    
+  text-align: center;
+}
+
+.additional-info{
+  max-width: 30rem;
+  align-content: space-between;
+}
+
+.no-left-margin{
+  margin-left: 0rem;
 }

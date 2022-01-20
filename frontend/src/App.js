@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import ProductPage from './pages/ProductPage';
 
@@ -10,7 +10,7 @@ function App() {
             <header>
                 <div className="row top">
                     <div>
-                        <a className="brand" href="index.html">Kamazon</a>
+                        <Link className="brand" to="/">Kamazon</Link>
                     </div>
                     <div>
                         Search Bar
@@ -27,7 +27,7 @@ function App() {
             </header>
             <main>
                 <Routes>
-                    <Route path="/product/:id" element={<ProductPage/>}></Route>
+                    <Route path="/product/:productId" element={<ProductPage/>}></Route>
                     <Route path="/" element={<HomePage/>} exact></Route>
                 </Routes>
             </main>
