@@ -10,11 +10,14 @@ export default function ProductPage(props) {
     if (!product){ 
         return <div>product not found or is no longer available</div>
     }
+    /*
+    Create page that will catch all the invalid look ups.
+    */ 
     return (
         /*
             Back to search result link
         */
-        <div className='row'>
+        <div className="row displayProduct">
             <div className='product-page'>
 
                 <div className='scroller'>
@@ -24,8 +27,7 @@ export default function ProductPage(props) {
                     <img className='clickable' src={product.image} alt={product.name}></img>
                     <img className='clickable' src={product.image} alt={product.name}></img>
                     <img className='clickable' src={product.image} alt={product.name}></img>
-                    <img className='clickable' src={product.image} alt={product.name}></img>
-                </div>
+                 </div>
 
                 <div className='product-image'>            
                     <img className="big" src={product.image} alt="primary"></img>
@@ -42,17 +44,20 @@ export default function ProductPage(props) {
                 
                 <h1 className='no-left-margin'>{product.name}</h1>
                 <h2 className='no-left-margin'>£{product.price}</h2>
+
+                <button className='button-cart'>Add to Cart</button>
+
                 <h2 className='no-left-margin'>{product.description}</h2>
 
                 {/*
-                Buy Now (button)
-                Add to Basket (button)
+                TO ADD:
                 Condition (new, refurbished, used, broken)
                 Quantity available (1-9999)
                 Quantity to buy (input, how many user wants to buy)
-                Description
                 Shipping Info
                 */}
+
+                
 
             </div>
         </div>

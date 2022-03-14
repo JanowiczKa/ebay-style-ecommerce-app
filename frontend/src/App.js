@@ -2,6 +2,8 @@ import React from 'react'
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import ProductPage from './pages/ProductPage';
+import CartPage from './pages/CartPage';
+import SignInPage from './pages/SignInPage';
 
 function App() {
   return (
@@ -16,10 +18,10 @@ function App() {
                         Search Bar
                     </div>
                     <div className="menu">
-                            <a className="cart" href="cart.html">
+                            <Link className="cart" to="cartPage">
                                 Cart
-                            </a>
-                            <a className="sign-in" href="signin.html">
+                            </Link>
+                            <a className="sign-in" href="signInPage">
                                 Sign In
                             </a>   
                     </div>
@@ -29,6 +31,8 @@ function App() {
                 <Routes>
                     <Route path="/product/:productId" element={<ProductPage/>}></Route>
                     <Route path="/" element={<HomePage/>} exact></Route>
+                    <Route path="cartPage" element={<CartPage/>}></Route>
+                    <Route path="signInPage" element={<SignInPage/>}></Route>
                 </Routes>
             </main>
             <footer className="row centre">All rights reserved</footer>
