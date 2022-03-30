@@ -15,10 +15,12 @@ const userSchema = new mongoose.Schema(
     password: {type: String, required:true},
     email: {type: String, required:true},
 
-    Rating: {type: [Number], default:0.0, required:false},
+    Rating: {type: Number, default:0.0, required:false},
     Ratings: {type: Number, default:0, required:false},
 
-    Cart: {type:[cartItemSchema], required:false},
+    ImageAddress: {type: String, required:false},
+
+    Cart: {type:[String], required:false},
     
     Selling: {type:[String], required:false},
 

@@ -4,7 +4,7 @@
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url)
 
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
 export const cartItemSchema = new mongoose.Schema(
     {
@@ -18,5 +18,5 @@ export const cartItemSchema = new mongoose.Schema(
   }
 );
 
-export const CartItem = mongoose.model('CartItem', cartItemSchema);
-// export default CartItem;
+const CartItem = mongoose.model('CartItem', cartItemSchema);
+export default CartItem;

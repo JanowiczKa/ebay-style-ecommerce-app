@@ -68,7 +68,7 @@ const data = {
             seller:'Kamil',
             seller_rating:4.9,
             rating_nums:58,
-            description:'7 feet tall :c',
+            description:'6 feet tall :c',
         },        
     ]
 }

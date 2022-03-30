@@ -1,63 +1,114 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import SellerRating from '../components/SellerRating';
-import data from '../data';
 
+export default function ProductPage() {
 
-export default function ProductPage(props) {
     let { productId } = useParams();
-    const product = data.products.find((x) => x._id === productId);
-    if (!product){ 
-        return <div>product not found or is no longer available</div>
+    const [product, setProduct] = useState([]);
+    const [quantity, setQuantity] = useState(1);
+
+    async function addToCart() {
+
+        let y = quantity;
+
+        if (quantity > product.Quantity){
+            y = product.Quantity;
+        }
+    
+        const response = await axios.post('/api/addToCart',
+        {
+          itemId: product._id,
+          userId: localStorage.getItem("userId"),
+          quantitySelected: y
+        })
+        .catch(function (error) {
+          alert(`error: ${error}`);
+        });
+
+        //alert(response);
     }
-    /*
-    Create page that will catch all the invalid look ups.
-    */ 
+
+    useEffect( () => {
+
+        const fetchData = async () => {
+            const data = await axios.post('/api/getProduct',
+            {
+                prodId: productId
+            });
+    
+            setProduct(data.data);
+    
+            //the reason for why the ratings don't load is 
+            //because it recieves no data due to setProduct being async ;c
+    
+            console.log(`product is: ${product}`);
+        }
+
+        fetchData();
+
+    }, []); /* runs only on the first render */
+    
+    if (!product){ 
+        return <div>Product not found or is no longer available</div>
+    }
+
     return (
         /*
             Back to search result link
         */
         <div className="row displayProduct">
+
             <div className='product-page'>
-
-                <div className='scroller'>
-                    <img className='clickable' src={product.image} alt={product.name}></img>
-                    <img className='clickable' src={product.image} alt={product.name}></img>
-                    <img className='clickable' src={product.image} alt={product.name}></img>
-                    <img className='clickable' src={product.image} alt={product.name}></img>
-                    <img className='clickable' src={product.image} alt={product.name}></img>
-                    <img className='clickable' src={product.image} alt={product.name}></img>
-                 </div>
-
                 <div className='product-image'>            
-                    <img className="big" src={product.image} alt="primary"></img>
+                    <img className="big" src={`/images/${product.ImageAddress}`} alt="primary"></img>
                 </div>
-                
+
+                <div>
+                    <input type="file"/>
+                    <button>Upload</button>
+                </div>  
             </div>
 
-            
             <div className='additional-info'>
-                <a className="seller" href="profie.html">
-                    <h3 className='no-left-margin'>Ad by {product.seller}</h3>  
-                    <SellerRating rating={product.seller_rating} reviewNums={product.rating_nums}></SellerRating>
-                </a>
                 
-                <h1 className='no-left-margin'>{product.name}</h1>
-                <h2 className='no-left-margin'>£{product.price}</h2>
+                {!!product ?
+                    <a className="seller" href={`profilePage/${product.SellerId}`}>
+                        <h3>Ad by {product.SellerName}</h3> 
+                        <SellerRating userId={product.SellerId}></SellerRating>
+                    </a>
+                :
+                <h3 className='no-left-margin'>{product.SellerId}</h3>
+                }
 
-                <button className='button-cart'>Add to Cart</button>
+                <h1 className='no-left-margin'>{product.ProductName}</h1>
+                <h2 className='no-left-margin'>£{product.Price}</h2>
 
-                <h2 className='no-left-margin'>{product.description}</h2>
+                {localStorage.getItem("userId") ? 
+                    <button className='button-cart' 
+                    onClick={() => addToCart()}>
+                    Add to Cart
+                    </button>
+                    :
+                    <button className='button-cart'>
+                    Log in
+                    </button>
+                }
 
-                {/*
-                TO ADD:
-                Condition (new, refurbished, used, broken)
-                Quantity available (1-9999)
-                Quantity to buy (input, how many user wants to buy)
-                Shipping Info
-                */}
-
+                <div>
+                    <label htmlFor="qty">Quantity:</label>
+                    <input type="number" 
+                    id="qty" 
+                    name="qty" 
+                    min='1' 
+                    max={product.Quantity} 
+                    value={quantity} 
+                    onChange={(i) => setQuantity(i.target.value)} 
+                    /><br/>
+                </div>
                 
+                <h2 className='no-left-margin'>{product.Description}</h2>
 
             </div>
         </div>

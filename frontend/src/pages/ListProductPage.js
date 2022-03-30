@@ -1,34 +1,13 @@
 import axios from "axios";
 import { useState } from "react";
 
-export default function SignInPage() {
+export default function ListProductPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   
   const handleLogin = async event => {
 
     event.preventDefault();
-
-    const response = await axios.post('/api/login',
-    {
-      email: email,
-      password: password
-    })
-    .catch(function (error) {
-      alert(`error: ${error}`);
-    });
-
-    alert(response.data);
-    if (response.data){
-
-      localStorage.setItem('userId', response.data);
-      setEmail("");
-      setPassword("");
-    }
-    else{
-      setPassword("");
-    }
-    window.location.reload();
   }
 
   return (  
