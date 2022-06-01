@@ -18,7 +18,7 @@ const userSchema = new mongoose.Schema(
     Rating: {type: Number, default:0.0, required:false},
     Ratings: {type: Number, default:0, required:false},
 
-    ImageAddress: {type: String, required:false},
+    ImageAddress: {type: String, default:"DefaultUser.png", required:true},
 
     Cart: {type:[String], required:false},
     

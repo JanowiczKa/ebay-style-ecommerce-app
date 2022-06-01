@@ -25,7 +25,7 @@ function App() {
                         <div className="menu">
 
                         {localStorage.getItem('userId') ? 
-                        <Link className="menuButton" to="listProductItem">
+                        <Link className="menuButton" to="listProductPage">
                         Sell Item
                         </Link> 
                         : 

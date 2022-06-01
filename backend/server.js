@@ -66,11 +66,19 @@ const upload = multer({
 
 
 
-async function createUser(name, password, email, isadmin) {
+async function createUser(name, password, email, imageAddress, isadmin) {
+    let rating = 0;
+    let ratings = 0;
+    let cart = new Array("");
+    let img = "DefaultUser.png";
     return new User({
       name,
       password,
       email,
+      rating,
+      ratings,
+      img,
+      cart,
       isadmin
     }).save()
 }
@@ -82,9 +90,34 @@ async function createCartItem(ItemID, Quantity) {
     }).save()
 }
 
-async function createProduct(SellerId, ProductName, Price, Quantity, Description, ImageAddress) {
+async function reduceProductStock(ItemID) {
+
+    //userId is person that bought it, not the seller
+    //let qty = await Product.findOne({ _id: ItemID }).select(Quantity);
+    let prod = await Product.findById(ItemID);
+    let qty = prod.Quantity;
+    prod.Quantity = (qty-1);
+
+    await prod.save();
+
+    //await Product.updateOne( { _id: ItemID }, { $set: { Quantity: (qty-1) } } ).save();
+
+    await Product.deleteMany({ Quantity: { $lte: 0 } }).save();
+
+    return true;
+}
+
+async function CleanUserCart(userID) {
+
+    await CartItem.deleteMany({ SellerId: userID });
+
+    await User.updateOne( { _id: userID }, { $set: { Cart: [] } } );
+}
+
+async function createProduct(SellerId, SellerName, ProductName, Price, Quantity, Description, ImageAddress) {
     return new Product({
         SellerId,
+        SellerName,
         ProductName,
         Price,
         Quantity,
@@ -149,7 +182,13 @@ app.use('/api/createProduct', async (req, res) =>{
 //retrieves products for main screen
 app.get('/api/products', async (req, res) =>{
     
-    let displayProducts = await GetDisplayProduct();
+    const displayProducts = [];
+    
+    for (let i = 0; i < 6; i++){
+        displayProducts.push(await GetDisplayProduct());
+    }
+
+    
     //console.log(`products were called they are: ${displayProducts}`);
 
     res.send(displayProducts);
@@ -165,8 +204,6 @@ app.use('/api/cart', async (req, res) =>{
     res.send(entireCart.Cart);
 });
 
-
-//takes in Id and returns used info, without password.
 app.use('/api/uploadImage', async (req, res) =>{
     upload(req,res,function(err) {  
         if(err) {  
@@ -174,6 +211,48 @@ app.use('/api/uploadImage', async (req, res) =>{
         }  
         res.end("File is uploaded successfully!");  
     });  
+});
+
+app.use('/api/createListing', async (req, res) =>{
+
+    upload(req,res,async function(err) {  
+
+        if(err) {  
+            return res.end("Error uploading file.");  
+        } 
+
+        //console.log(req.body);
+        console.log(req.file.filename);
+        console.log(req.body.productName);
+
+        let user = await User.findById(req.body.userId);
+
+        let newProduct = await createProduct(
+            user._id, 
+            user.name,
+            req.body.productName, 
+            req.body.productPrice, 
+            req.body.productQty, 
+            req.body.productDesc, 
+            req.file.filename);
+        
+        await User.updateOne(
+            { _id: req.body.userId }, 
+            { $push : { "Selling" : [newProduct._id] } }            
+        );
+
+        //createProduct(SellerId, ProductName, Price, Quantity, Description, ImageAddress)
+        
+        // fd.append('image', productImg);
+        // fd.append("userId", localStorage.getItem('userId'));
+        // fd.append("productName", productName);
+        // fd.append("productQty", productQty);
+        // fd.append("productPrice", productPrice);
+        // fd.append("productDesc", productDesc);
+
+        res.end("success!");  
+    });  
+
 });
 
 //takes in Id and returns used info, without password.
@@ -309,6 +388,45 @@ app.post('/api/login', async (req, res) =>{
     else{
         //console.log("Failed to log in.");
         res.send(null);
+    }
+})
+
+//register page
+app.post('/api/register', async (req, res) =>{
+
+    const data = req.body;
+    let user = await CheckIfUserExists(data.email, data.password);
+
+    if (!user){
+        await createUser(data.name, data.password, data.email, "DefaultUser.png", false);
+
+        res.send("success");
+        //put in user id into the app in frontend so pages can access it.
+        //redirect user to home page.
+    }
+    else{
+        //console.log("Failed to log in.");
+        res.send("fail");
+    }
+})
+
+//purchase goods
+app.post('/api/purchaseGoods', async (req, res) =>{
+
+    const data = req.body;
+
+    for (let i = 0; i < data.cartIds; i++){
+        console.log(`${data.cartIds[i]}, was in the cart`);
+        reduceProductStock(data.cartIds[i]);
+    }
+
+    
+    if (CleanUserCart(data.user)){
+
+        res.send("success");
+    }
+    else{
+        res.send("fail");
     }
 })
 

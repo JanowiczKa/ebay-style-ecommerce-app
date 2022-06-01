@@ -38,13 +38,13 @@ export default function CartItemDisplay(props) {
 
             <div className="qty">
                 <h2>Stock: {cartItem.Quantity}</h2>
-                <input type="number" 
+                {/* <input type="number" 
                     id="qty" 
                     name="qty" 
                     min='1' 
                     max={cartItem.Quantity} 
                     value={1} 
-                    />
+                    /> */}
             </div>
 
             <a>Remove</a>

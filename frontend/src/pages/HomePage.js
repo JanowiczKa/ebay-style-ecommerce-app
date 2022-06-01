@@ -19,11 +19,11 @@ export default function HomePage() {
         <div>
             <div className = "row centre"> 
             {/* currently passing one so I only need one thing to be rendered */}
-                {<Product key={products._id} product={products}></Product>}
-{/* 
+                {/* {<Product key={products._id} product={products}></Product>} */}
+
                 {products.map((product) => (
                     <Product key={product._id} product={product}></Product>
-                ))} */}
+                ))}
             </div>
         </div>
     );

@@ -4,7 +4,31 @@ import CartItemDisplay from '../components/CartItemDisplay';
 
 export default function CartPage() {
   
-  const [cartItems, setCartItems] = useState([]);
+  const [cartItems, setCartItems] = useState([]); //array of cart ids
+
+  const handlePurchase = async event => {
+
+    event.preventDefault();
+
+    alert(cartItems);
+
+    const response = await axios.post('/api/purchaseGoods',
+    {
+      user: localStorage.getItem('userId'),
+      cartIds: cartItems,
+    })
+    .catch(function (error) {
+      alert(`error: ${error}`);
+    });
+
+    alert(response.data);
+    if (response.data  === "success"){
+    }
+    else{
+    }
+
+    window.location.reload();
+  }
 
   useEffect(() => {
       const fetchData = async () => {
@@ -37,16 +61,11 @@ export default function CartPage() {
         </div>
 
         <div className='additional-info'>
-            
-            <div>
-              <label >Total: </label>
-            </div>
 
-              
-            <div>
-              <button className='button-cart'>Proceed to Checkout</button>
-            </div>
-            
+          <form onSubmit={handlePurchase}>
+            <input className='button-cart' type="submit" value="Proceed to Checkout"></input>
+          </form>  
+
         </div>
     </div>
 );

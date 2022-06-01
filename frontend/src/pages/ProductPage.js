@@ -17,7 +17,7 @@ export default function ProductPage() {
             y = product.Quantity;
         }
     
-        const response = await axios.post('/api/addToCart',
+        await axios.post('/api/addToCart',
         {
           itemId: product._id,
           userId: localStorage.getItem("userId"),
@@ -26,8 +26,6 @@ export default function ProductPage() {
         .catch(function (error) {
           alert(`error: ${error}`);
         });
-
-        //alert(response);
     }
 
     useEffect( () => {
@@ -48,7 +46,7 @@ export default function ProductPage() {
 
         fetchData();
 
-    }, []); /* runs only on the first render */
+    }, [product, productId]); /* runs only on the first render */
     
     if (!product){ 
         return <div>Product not found or is no longer available</div>
@@ -64,11 +62,6 @@ export default function ProductPage() {
                 <div className='product-image'>            
                     <img className="big" src={`/images/${product.ImageAddress}`} alt="primary"></img>
                 </div>
-
-                <div>
-                    <input type="file"/>
-                    <button>Upload</button>
-                </div>  
             </div>
 
             <div className='additional-info'>
@@ -85,6 +78,21 @@ export default function ProductPage() {
                 <h1 className='no-left-margin'>{product.ProductName}</h1>
                 <h2 className='no-left-margin'>£{product.Price}</h2>
 
+                
+
+                <div>
+                    <label htmlFor="qty">Quantity: {product.Quantity}</label>
+                    
+                    {/* <input type="number" 
+                    id="qty" 
+                    name="qty" 
+                    min='1' 
+                    max={product.Quantity} 
+                    value={quantity} 
+                    onChange={(i) => setQuantity(i.target.value)}  */}
+                    <br/>
+                </div><br/>
+
                 {localStorage.getItem("userId") ? 
                     <button className='button-cart' 
                     onClick={() => addToCart()}>
@@ -95,20 +103,9 @@ export default function ProductPage() {
                     Log in
                     </button>
                 }
-
-                <div>
-                    <label htmlFor="qty">Quantity:</label>
-                    <input type="number" 
-                    id="qty" 
-                    name="qty" 
-                    min='1' 
-                    max={product.Quantity} 
-                    value={quantity} 
-                    onChange={(i) => setQuantity(i.target.value)} 
-                    /><br/>
-                </div>
                 
-                <h2 className='no-left-margin'>{product.Description}</h2>
+                
+                <br/><h2 className='no-left-margin'>{product.Description}</h2>
 
             </div>
         </div>

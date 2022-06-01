@@ -57,31 +57,34 @@ export default function ProfilePage() {
                     <img className="big" src={`/images/${profile.ImageAddress}`} alt="primary"></img>
                 </div>
                 
-                <div>
-                    <label htmlFor="upload">Upload New Profile Picture:</label>
+                {localStorage.getItem('userId') === profileId ?
+                    <div>
+                    <label htmlFor="upload">Upload New Profile Picture:</label><br/>
                     <input 
                     type="file" 
                     name="upload" 
                     accept='image/*' 
                     onChange={(i) => setSelectedFile(i.target.files[0])}>
-                    </input>
+                    </input><br/>
 
                     <button 
                     onClick={fileUpload}>
                         Upload Image
                     </button>
                 </div>  
+                :
+                ''}
             </div>
 
             <div className='additional-info'>
 
-                <h1 className='no-left-margin'>{profile.name}</h1>
+                <h2 className='no-left-margin'>User: {profile.name}</h2>
 
-                <h2 className='no-left-margin'>{profile.email}</h2>
+                <h2 className='no-left-margin'>Email: {profile.email}</h2>
 
                 <div className="seller">
                     <SellerRating userId={profile._id}></SellerRating>
-                    <h3 className='no-left-margin'>{profile.Rating}</h3>
+                    <h3 className='no-left-margin'>User Rating: {profile.Rating}</h3>
                 </div>
                 
             </div>
